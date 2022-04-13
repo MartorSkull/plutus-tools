@@ -11,7 +11,7 @@ source=(
     "plutus.sh"
 )
 sha256sums=(
-    "87ce3194cb56e6ecc8c0e0493b2ed4015466c47da38dc5758e84bcb7a6a7f54e"
+    "993e004c5dba7716ec47b2f65c398ade442deaafc0dda6e232ff6e2beaf25c5a"
     "cb799ace7f4c3e1272521cf11445b3c378e3b72e99fcdcf71d8d24f32864565a"
 )
 depends=(git nix)
