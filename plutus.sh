@@ -1,0 +1,1 @@
+export PLUTUS=$HOME/.local/share/plutus-apps

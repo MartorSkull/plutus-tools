@@ -1,0 +1,59 @@
+#!/bin/bash
+
+function phelp() {
+    echo "Usage: $0 [action] {arguments}"
+    echo "Actions:"
+    echo "    - shell: start the plutus-apps nix-shell in the current working dir."
+    echo "    - tag: print the current tag."
+    echo "    - tag [github tag]: use the specified tag."
+    echo "    - fetch: fetches the latest commits and tags from the plutus-apps repo"
+    echo "    - help: print this message."
+}
+function ehelp() {
+    phelp
+    echo "The enviroment variable PLUTUS must be set to the desired plutus-apps repo."
+    echo "Make sure this repo doesn't need any password and that doesn't have any modifications."
+    echo "You can also set the DEACTIVATE_PLUTUS variable to prevent the automatic fetch each login."
+}
+
+function nbuild() {
+    nix build \
+                --extra-experimental-features nix-command \
+                -f default.nix \
+                plutus-apps.haskell.packages.plutus-pab.components.library
+}
+
+[ -z ${PLUTUS} ] && ehelp && exit
+if [ ! -d ${PLUTUS} ]; then
+    git clone https://github.com/input-output-hk/plutus-apps.git ${PLUTUS}
+    nbuild
+fi
+OPWD=$(pwd)
+cd $PLUTUS
+case $1 in
+    shell)
+        nix-shell \
+            --extra-experimental-features flakes \
+            --command "cd $OPWD; return"
+        ;;
+    tag)
+        if [ ! -z ${2+x} ]; then
+            echo "Switching to" $2
+            git fetch --all
+            (git checkout $2 &> /dev/null && \
+            nbuild
+            )
+        fi
+        git describe --tags
+        git rev-parse --verify HEAD
+        ;;
+    fetch)
+        git fetch --all
+        ;;
+    help)
+        ehelp
+        ;;
+    *)
+        phelp
+        ;;
+esac
