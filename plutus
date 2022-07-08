@@ -4,6 +4,7 @@ function phelp() {
     echo "Usage: $0 [action] {arguments}"
     echo "Actions:"
     echo "    - shell: start the plutus-apps nix-shell in the current working dir."
+    echo "    - shell [command]: start the plutus-apps nix-shell in the current working dir and runs command."
     echo "    - tag: print the current tag."
     echo "    - tag [github tag]: use the specified tag."
     echo "    - fetch: fetches the latest commits and tags from the plutus-apps repo"
@@ -34,7 +35,7 @@ case $1 in
     shell)
         nix-shell \
             --extra-experimental-features flakes \
-            --command "cd $OPWD; return"
+            --command "cd $OPWD; ${2:+$2;} return"
         ;;
     tag)
         if [ ! -z ${2+x} ]; then

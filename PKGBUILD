@@ -1,6 +1,6 @@
 # Maintainer: MartorSkull <livemartor@gmail.com>
 pkgname=plutus-tools
-pkgver=0.1.0
+pkgver=0.1.1
 pkgrel=1
 pkgdesc="Utilities for cardano smart contract development"
 provides=('plutus-tools')
@@ -11,7 +11,7 @@ source=(
     "plutus.sh"
 )
 sha256sums=(
-    "993e004c5dba7716ec47b2f65c398ade442deaafc0dda6e232ff6e2beaf25c5a"
+    "f701ef374a1ecee642e2da76af16dfce3eb86191b8c6bbe470bf6a920eebf09f"
     "cb799ace7f4c3e1272521cf11445b3c378e3b72e99fcdcf71d8d24f32864565a"
 )
 depends=(git nix)
